@@ -179,7 +179,7 @@ suite('Remote functions', function() {
 
     transaction.once('submitted', function (m) {
       // console.log('proposed: %s', JSON.stringify(m));
-      // buster.assert.equals(m.result, 'terNO_DST_INSUF_XRP');
+      // buster.assert.equals(m.result, 'terNO_DST_INSUF_XDV');
       assert.strictEqual(m.engine_result, 'tesSUCCESS');
     });
 

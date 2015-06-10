@@ -33,16 +33,16 @@ class Path_test : public TestSuite
     test_no_direct_path_no_intermediary_no_alternatives()
     {
         testcase("no direct path no intermediary no alternatives");
-        std::uint64_t const xrp = std::mega::num;
+        std::uint64_t const xdv = std::mega::num;
 
         auto master = createAccount("masterpassphrase", KeyType::ed25519);
 
         Ledger::pointer LCL;
         Ledger::pointer ledger;
-        std::tie(LCL, ledger) = createGenesisLedger(100000 * xrp, master);
+        std::tie(LCL, ledger) = createGenesisLedger(100000 * xdv, master);
 
         auto accounts = createAndFundAccounts(master, { "alice", "bob" }, 
-            KeyType::ed25519, 10000 * xrp, ledger);
+            KeyType::ed25519, 10000 * xdv, ledger);
         auto& alice = accounts["alice"];
         auto& bob = accounts["bob"];
         expectNotEquals(alice.pk.humanAccountID(), master.pk.humanAccountID());
@@ -58,17 +58,17 @@ class Path_test : public TestSuite
     test_direct_path_no_intermediary()
     {
         testcase("direct path no intermediary");
-        std::uint64_t const xrp = std::mega::num;
+        std::uint64_t const xdv = std::mega::num;
 
         auto master = createAccount("masterpassphrase", KeyType::ed25519);
 
         Ledger::pointer LCL;
         Ledger::pointer ledger;
-        std::tie(LCL, ledger) = createGenesisLedger(100000 * xrp, master);
+        std::tie(LCL, ledger) = createGenesisLedger(100000 * xdv, master);
 
         // Create accounts
         auto accounts = createAndFundAccounts(master, { "alice", "bob" },
-            KeyType::ed25519, 10000 * xrp, ledger);
+            KeyType::ed25519, 10000 * xdv, ledger);
         auto& alice = accounts["alice"];
         auto& bob = accounts["bob"];
         expectNotEquals(alice.pk.humanAccountID(), master.pk.humanAccountID());
@@ -96,17 +96,17 @@ class Path_test : public TestSuite
     {
         testcase("payment auto path find (using build_path)");
 
-        std::uint64_t const xrp = std::mega::num;
+        std::uint64_t const xdv = std::mega::num;
 
         auto master = createAccount("masterpassphrase", KeyType::ed25519);
 
         Ledger::pointer LCL;
         Ledger::pointer ledger;
-        std::tie(LCL, ledger) = createGenesisLedger(100000 * xrp, master);
+        std::tie(LCL, ledger) = createGenesisLedger(100000 * xdv, master);
 
         // Create accounts
         auto accounts = createAndFundAccountsWithFlags(master, { "alice", "bob", "mtgox" },
-            KeyType::ed25519, 10000 * xrp, ledger, LCL, asfDefaultRipple);
+            KeyType::ed25519, 10000 * xdv, ledger, LCL, asfDefaultRipple);
         auto& alice = accounts["alice"];
         auto& bob = accounts["bob"];
         auto& mtgox = accounts["mtgox"];
@@ -136,17 +136,17 @@ class Path_test : public TestSuite
     {
         testcase("path find");
 
-        std::uint64_t const xrp = std::mega::num;
+        std::uint64_t const xdv = std::mega::num;
 
         auto master = createAccount("masterpassphrase", KeyType::ed25519);
 
         Ledger::pointer LCL;
         Ledger::pointer ledger;
-        std::tie(LCL, ledger) = createGenesisLedger(100000 * xrp, master);
+        std::tie(LCL, ledger) = createGenesisLedger(100000 * xdv, master);
 
         // Create accounts
         auto accounts = createAndFundAccountsWithFlags(master, { "alice", "bob", "mtgox" },
-            KeyType::ed25519, 10000 * xrp, ledger, LCL, asfDefaultRipple);
+            KeyType::ed25519, 10000 * xdv, ledger, LCL, asfDefaultRipple);
         auto& alice = accounts["alice"];
         auto& bob = accounts["bob"];
         auto& mtgox = accounts["mtgox"];

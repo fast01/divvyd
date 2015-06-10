@@ -74,7 +74,7 @@ static void updateHelper (SLE::ref entry,
     hash_set< uint256 >& seen,
     OrderBookDB::IssueToOrderBook& destMap,
     OrderBookDB::IssueToOrderBook& sourceMap,
-    hash_set< Issue >& XRPBooks,
+    hash_set< Issue >& XDVBooks,
     int& books)
 {
     if (entry->getType () == ltDIR_NODE &&
@@ -93,8 +93,8 @@ static void updateHelper (SLE::ref entry,
             auto orderBook = std::make_shared<OrderBook> (index, book);
             sourceMap[book.in].push_back (orderBook);
             destMap[book.out].push_back (orderBook);
-            if (isXRP(book.out))
-                XRPBooks.insert(book.in);
+            if (isXDV(book.out))
+                XDVBooks.insert(book.in);
             ++books;
         }
     }
@@ -105,7 +105,7 @@ void OrderBookDB::update (Ledger::pointer ledger)
     hash_set< uint256 > seen;
     OrderBookDB::IssueToOrderBook destMap;
     OrderBookDB::IssueToOrderBook sourceMap;
-    hash_set< Issue > XRPBooks;
+    hash_set< Issue > XDVBooks;
 
     WriteLog (lsDEBUG, OrderBookDB) << "OrderBookDB::update>";
 
@@ -116,7 +116,7 @@ void OrderBookDB::update (Ledger::pointer ledger)
     {
         ledger->visitStateItems(std::bind(&updateHelper, std::placeholders::_1,
                                           std::ref(seen), std::ref(destMap),
-            std::ref(sourceMap), std::ref(XRPBooks), std::ref(books)));
+            std::ref(sourceMap), std::ref(XDVBooks), std::ref(books)));
     }
     catch (const SHAMapMissingNode&)
     {
@@ -132,7 +132,7 @@ void OrderBookDB::update (Ledger::pointer ledger)
     {
         ScopedLockType sl (mLock);
 
-        mXRPBooks.swap(XRPBooks);
+        mXDVBooks.swap(XDVBooks);
         mSourceMap.swap(sourceMap);
         mDestMap.swap(destMap);
     }
@@ -141,16 +141,16 @@ void OrderBookDB::update (Ledger::pointer ledger)
 
 void OrderBookDB::addOrderBook(Book const& book)
 {
-    bool toXRP = isXRP (book.out);
+    bool toXDV = isXDV (book.out);
     ScopedLockType sl (mLock);
 
-    if (toXRP)
+    if (toXDV)
     {
-        // We don't want to search through all the to-XRP or from-XRP order
+        // We don't want to search through all the to-XDV or from-XDV order
         // books!
         for (auto ob: mSourceMap[book.in])
         {
-            if (isXRP (ob->getCurrencyOut ())) // also to XRP
+            if (isXDV (ob->getCurrencyOut ())) // also to XDV
                 return;
         }
     }
@@ -170,8 +170,8 @@ void OrderBookDB::addOrderBook(Book const& book)
 
     mSourceMap[book.in].push_back (orderBook);
     mDestMap[book.out].push_back (orderBook);
-    if (toXRP)
-        mXRPBooks.insert(book.in);
+    if (toXDV)
+        mXDVBooks.insert(book.in);
 }
 
 // return list of all orderbooks that want this issuerID and currencyID
@@ -188,10 +188,10 @@ int OrderBookDB::getBookSize(Issue const& issue) {
     return it == mSourceMap.end () ? 0 : it->second.size();
 }
 
-bool OrderBookDB::isBookToXRP(Issue const& issue)
+bool OrderBookDB::isBookToXDV(Issue const& issue)
 {
     ScopedLockType sl (mLock);
-    return mXRPBooks.count(issue) > 0;
+    return mXDVBooks.count(issue) > 0;
 }
 
 BookListeners::pointer OrderBookDB::makeBookListeners (Book const& book)

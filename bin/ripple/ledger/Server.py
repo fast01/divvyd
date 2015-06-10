@@ -12,7 +12,7 @@ from ripple.util import Range
 
 class Server(object):
     def __init__(self):
-        cfg_file = File.normalize(ARGS.config or 'rippled.cfg')
+        cfg_file = File.normalize(ARGS.config or 'divvyd.cfg')
         self.config = ConfigFile.read(open(cfg_file))
         if ARGS.database != ARGS.NONE:
             reader = DatabaseReader.DatabaseReader(self.config)

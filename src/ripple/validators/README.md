@@ -43,7 +43,7 @@ The module looks for these criteria to determine suitability:
 </tr>
 <tr>
   <td>Source</td>
-  <td>A trusted source of validator descriptors. Examples: the rippled
+  <td>A trusted source of validator descriptors. Examples: the divvyd
       configuration file, a local text file,  or a trusted URL such
       as https://ripple.com/validators.txt.
   </td></tr>

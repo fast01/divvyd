@@ -2,7 +2,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 import datetime
 
-# Format for human-readable dates in rippled
+# Format for human-readable dates in divvyd
 _DATE_FORMAT = '%Y-%b-%d'
 _TIME_FORMAT = '%H:%M:%S'
 _DATETIME_FORMAT = '%s %s' % (_DATE_FORMAT, _TIME_FORMAT)

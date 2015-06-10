@@ -290,7 +290,7 @@ public:
     TER redeem_iou (Account const& account,
         STAmount const& amount, Issue const& issue);
 
-    TER transfer_xrp (Account const& from, Account const& to, STAmount const& amount);
+    TER transfer_xdv (Account const& from, Account const& to, STAmount const& amount);
 
 private:
     Ledger::pointer mLedger;

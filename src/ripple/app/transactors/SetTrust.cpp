@@ -69,7 +69,7 @@ public:
         if (badCurrency() == saLimitAmount.getCurrency ())
         {
             if (m_journal.trace) m_journal.trace <<
-                "Malformed transaction: specifies XRP as IOU";
+                "Malformed transaction: specifies XDV as IOU";
             return temBAD_CURRENCY;
         }
 
@@ -115,9 +115,9 @@ public:
         //
         // This is also a security feature: if you're a gateway and you want to
         // be able to let someone use your services, you would otherwise have to
-        // give them enough XRP to cover the incremental reserve for their trust
+        // give them enough XDV to cover the incremental reserve for their trust
         // line. If they had no intention of using your services, they could use
-        // the XRP for their own purposes. So we make it possible for gateways
+        // the XDV for their own purposes. So we make it possible for gateways
         // to fund accounts in a way where there's no incentive to trick them
         // into creating an account you have no intention of using.
 
@@ -385,7 +385,7 @@ public:
                 m_journal.trace <<
                     "Delay transaction: Insufficent reserve to add trust line.";
 
-                // Another transaction could provide XRP to the account and then
+                // Another transaction could provide XDV to the account and then
                 // this transaction would succeed.
                 terResult = tecINSUF_RESERVE_LINE;
             }

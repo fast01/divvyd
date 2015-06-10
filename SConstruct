@@ -1,4 +1,4 @@
-# rippled SConstruct
+# divvyd SConstruct
 #
 '''
 
@@ -6,7 +6,7 @@
     ----------------------------------------------------------------------------
 
     <none>          Same as 'install'
-    install         Default target and copies it to build/rippled (default)
+    install         Default target and copies it to build/divvyd (default)
 
     all             All available variants
     debug           All available debug variants
@@ -96,7 +96,7 @@ CHECK_COMMAND = 'openssl version -a'
 CHECK_LINE = 'built on: '
 BUILD_TIME = 'Mon Apr  7 20:33:19 UTC 2014'
 OPENSSL_ERROR = ('Your openSSL was built on %s; '
-                 'rippled needs a version built on or after %s.')
+                 'divvyd needs a version built on or after %s.')
 UNITY_BUILD_DIRECTORY = 'src/ripple/unity/'
 
 def check_openssl():
@@ -840,7 +840,7 @@ for tu_style in ['classic', 'unity']:
                 object_builder.add_source_files('src/ripple/unity/beastobjc.mm')
 
             target = env.Program(
-                target=os.path.join(variant_dir, 'rippled'),
+                target=os.path.join(variant_dir, 'divvyd'),
                 source=object_builder.objects
                 )
 
@@ -885,7 +885,7 @@ def PhonyTargets(env = None, **kw):
     for target, action in kw.items():
         env.AlwaysBuild(env.Alias(target, [], action))
 
-# Build the list of rippled source files that hold unit tests
+# Build the list of divvyd source files that hold unit tests
 def do_count(target, source, env):
     def list_testfiles(base, suffixes):
         def _iter(base):

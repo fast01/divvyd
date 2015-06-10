@@ -10,7 +10,7 @@ from ripple.util import Log
 from ripple.util import Range
 
 _ERROR_CODE_REASON = {
-    62: 'No rippled server is running.',
+    62: 'No divvyd server is running.',
 }
 
 _ERROR_TEXT = {
@@ -23,9 +23,9 @@ _DEFAULT_ERROR_ = "Couldn't connect to server."
 
 class RippledReader(object):
     def __init__(self, config):
-        fname = File.normalize(ARGS.rippled)
+        fname = File.normalize(ARGS.divvyd)
         if not os.path.exists(fname):
-            raise Exception('No rippled found at %s.' % fname)
+            raise Exception('No divvyd found at %s.' % fname)
         self.cmd = [fname]
         if ARGS.config:
             self.cmd.extend(['--conf', File.normalize(ARGS.config)])

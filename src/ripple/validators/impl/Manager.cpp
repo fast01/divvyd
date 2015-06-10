@@ -53,7 +53,7 @@
     of independent Source objects, which may come from the configuration file,
     a separate file, a URL from some trusted domain, or from the network itself.
 
-    In order that rippled administrators may publish their ChosenValidators
+    In order that divvyd administrators may publish their ChosenValidators
     list at a URL on a trusted domain that they own, this module compiles
     statistics on ledgers signed by validators and stores them in a database.
     From this database reports and alerts may be generated so that up-to-date
@@ -87,11 +87,11 @@
       of this feature, on the wiki. "DRAFT" or "PROPOSE" to mark it as provisional.
       Template: https://ripple.com/wiki/Federation_protocol
       - What to do if you're a publisher of ValidatorList
-      - What to do if you're a rippled administrator
+      - What to do if you're a divvyd administrator
       - Overview of how ChosenValidators works
 
     Goals:
-      Make default configuration of rippled secure.
+      Make default configuration of divvyd secure.
         * Ship with TrustedUriList
         * Also have a preset RankedValidators
       Eliminate administrative burden of maintaining

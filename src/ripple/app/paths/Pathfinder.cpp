@@ -33,9 +33,9 @@
 
 Core Pathfinding Engine
 
-The pathfinding request is identified by category, XRP to XRP, XRP to
-non-XRP, non-XRP to XRP, same currency non-XRP to non-XRP, cross-currency
-non-XRP to non-XRP.  For each category, there is a table of paths that the
+The pathfinding request is identified by category, XDV to XDV, XDV to
+non-XDV, non-XDV to XDV, same currency non-XDV to non-XDV, cross-currency
+non-XDV to non-XDV.  For each category, there is a table of paths that the
 pathfinder searches for.  Complete paths are collected.
 
 Each complete path is then rated and sorted. Paths with no or trivial
@@ -149,7 +149,7 @@ std::string pathTypeToString (Pathfinder::PathType const& type)
             case Pathfinder::nt_BOOKS:
                 ret.append("b");
                 break;
-            case Pathfinder::nt_XRP_BOOK:
+            case Pathfinder::nt_XDV_BOOK:
                 ret.append("x");
                 break;
             case Pathfinder::nt_DEST_BOOK:
@@ -175,7 +175,7 @@ Pathfinder::Pathfinder (
     STAmount const& saDstAmount)
     :   mSrcAccount (uSrcAccount),
         mDstAccount (uDstAccount),
-        mEffectiveDst (isXRP(saDstAmount.getIssuer ()) ?
+        mEffectiveDst (isXDV(saDstAmount.getIssuer ()) ?
             uDstAccount : saDstAmount.getIssuer ()),
         mDstAmount (saDstAmount),
         mSrcCurrency (uSrcCurrency),
@@ -184,7 +184,7 @@ Pathfinder::Pathfinder (
         mLedger (cache->getLedger ()),
         mRLCache (cache)
 {
-    assert (isXRP(uSrcCurrency) == isXRP(uSrcIssuer));
+    assert (isXDV(uSrcCurrency) == isXDV(uSrcIssuer));
 }
 
 Pathfinder::Pathfinder (
@@ -195,14 +195,14 @@ Pathfinder::Pathfinder (
     STAmount const& saDstAmount)
     :   mSrcAccount (uSrcAccount),
         mDstAccount (uDstAccount),
-        mEffectiveDst (isXRP(saDstAmount.getIssuer ()) ?
+        mEffectiveDst (isXDV(saDstAmount.getIssuer ()) ?
             uDstAccount : saDstAmount.getIssuer ()),
         mDstAmount (saDstAmount),
         mSrcCurrency (uSrcCurrency),
         mSrcAmount (
         {
             uSrcCurrency,
-            isXRP (uSrcCurrency) ? xrpAccount () : uSrcAccount
+            isXDV (uSrcCurrency) ? xdvAccount () : uSrcAccount
         }, 1u, 0, true),
         mLedger (cache->getLedger ()),
         mRLCache (cache)
@@ -245,12 +245,12 @@ bool Pathfinder::findPaths (int searchLevel)
 
     m_loadEvent = getApp ().getJobQueue ().getLoadEvent (
         jtPATH_FIND, "FindPath");
-    auto currencyIsXRP = isXRP (mSrcCurrency);
+    auto currencyIsXDV = isXDV (mSrcCurrency);
 
     bool useIssuerAccount
-            = mSrcIssuer && !currencyIsXRP && !isXRP (*mSrcIssuer);
+            = mSrcIssuer && !currencyIsXDV && !isXDV (*mSrcIssuer);
     auto& account = useIssuerAccount ? *mSrcIssuer : mSrcAccount;
-    auto issuer = currencyIsXRP ? Account() : account;
+    auto issuer = currencyIsXDV ? Account() : account;
     mSource = STPathElement (account, mSrcCurrency, issuer);
     auto issuerString = mSrcIssuer
             ? to_string (*mSrcIssuer) : std::string ("none");
@@ -268,8 +268,8 @@ bool Pathfinder::findPaths (int searchLevel)
         return false;
     }
 
-    bool bSrcXrp = isXRP (mSrcCurrency);
-    bool bDstXrp = isXRP (mDstAmount.getCurrency());
+    bool bSrcXrp = isXDV (mSrcCurrency);
+    bool bDstXrp = isXDV (mDstAmount.getCurrency());
 
     if (!mLedger->getSLEi (getAccountRootIndex (mSrcAccount)))
     {
@@ -293,7 +293,7 @@ bool Pathfinder::findPaths (int searchLevel)
         if (!bDstXrp)
         {
             WriteLog (lsDEBUG, Pathfinder)
-                    << "New account not being funded in XRP ";
+                    << "New account not being funded in XDV ";
             return false;
         }
 
@@ -312,33 +312,33 @@ bool Pathfinder::findPaths (int searchLevel)
     PaymentType paymentType;
     if (bSrcXrp && bDstXrp)
     {
-        // XRP -> XRP
-        WriteLog (lsDEBUG, Pathfinder) << "XRP to XRP payment";
-        paymentType = pt_XRP_to_XRP;
+        // XDV -> XDV
+        WriteLog (lsDEBUG, Pathfinder) << "XDV to XDV payment";
+        paymentType = pt_XDV_to_XDV;
     }
     else if (bSrcXrp)
     {
-        // XRP -> non-XRP
-        WriteLog (lsDEBUG, Pathfinder) << "XRP to non-XRP payment";
-        paymentType = pt_XRP_to_nonXRP;
+        // XDV -> non-XDV
+        WriteLog (lsDEBUG, Pathfinder) << "XDV to non-XDV payment";
+        paymentType = pt_XDV_to_nonXDV;
     }
     else if (bDstXrp)
     {
-        // non-XRP -> XRP
-        WriteLog (lsDEBUG, Pathfinder) << "non-XRP to XRP payment";
-        paymentType = pt_nonXRP_to_XRP;
+        // non-XDV -> XDV
+        WriteLog (lsDEBUG, Pathfinder) << "non-XDV to XDV payment";
+        paymentType = pt_nonXDV_to_XDV;
     }
     else if (mSrcCurrency == mDstAmount.getCurrency ())
     {
-        // non-XRP -> non-XRP - Same currency
-        WriteLog (lsDEBUG, Pathfinder) << "non-XRP to non-XRP - same currency";
-        paymentType = pt_nonXRP_to_same;
+        // non-XDV -> non-XDV - Same currency
+        WriteLog (lsDEBUG, Pathfinder) << "non-XDV to non-XDV - same currency";
+        paymentType = pt_nonXDV_to_same;
     }
     else
     {
-        // non-XRP to non-XRP - Different currency
-        WriteLog (lsDEBUG, Pathfinder) << "non-XRP to non-XRP - cross currency";
-        paymentType = pt_nonXRP_to_nonXRP;
+        // non-XDV to non-XDV - Different currency
+        WriteLog (lsDEBUG, Pathfinder) << "non-XDV to non-XDV - cross currency";
+        paymentType = pt_nonXDV_to_nonXDV;
     }
 
     // Now iterate over all paths for that paymentType.
@@ -564,7 +564,7 @@ STPathSet Pathfinder::getBestPaths (
         return mCompletePaths;
 
     assert (fullLiquidityPath.empty ());
-    const bool issuerIsSender = isXRP (mSrcCurrency) || (srcIssuer == mSrcAccount);
+    const bool issuerIsSender = isXDV (mSrcCurrency) || (srcIssuer == mSrcAccount);
 
     std::vector <PathRank> extraPathRanks;
     rankPaths (maxPaths, extraPaths, extraPathRanks);
@@ -682,7 +682,7 @@ bool Pathfinder::issueMatchesOrigin (Issue const& issue)
 {
     bool matchingCurrency = (issue.currency == mSrcCurrency);
     bool matchingAccount =
-            isXRP (issue.currency) ||
+            isXDV (issue.currency) ||
             (mSrcIssuer && issue.account == mSrcIssuer) ||
             issue.account == mSrcAccount;
 
@@ -811,8 +811,8 @@ STPathSet& Pathfinder::addPathsForType (PathType const& pathType)
         addLinks (parentPaths, pathsOut, afADD_BOOKS);
         break;
 
-    case nt_XRP_BOOK:
-        addLinks (parentPaths, pathsOut, afADD_BOOKS | afOB_XRP);
+    case nt_XDV_BOOK:
+        addLinks (parentPaths, pathsOut, afADD_BOOKS | afOB_XDV);
         break;
 
     case nt_DEST_BOOK:
@@ -893,7 +893,7 @@ void Pathfinder::addLink (
     auto const& uEndCurrency = pathEnd.getCurrency ();
     auto const& uEndIssuer = pathEnd.getIssuerID ();
     auto const& uEndAccount = pathEnd.getAccountID ();
-    bool const bOnXRP = uEndCurrency.isZero ();
+    bool const bOnXDV = uEndCurrency.isZero ();
 
     // Does pathfinding really need to get this to
     // a gateway (the issuer of the destination amount)
@@ -901,16 +901,16 @@ void Pathfinder::addLink (
     bool const hasEffectiveDestination = mEffectiveDst != mDstAccount;
 
     WriteLog (lsTRACE, Pathfinder) << "addLink< flags="
-                                   << addFlags << " onXRP=" << bOnXRP;
+                                   << addFlags << " onXDV=" << bOnXDV;
     WriteLog (lsTRACE, Pathfinder) << currentPath.getJson (0);
 
     if (addFlags & afADD_ACCOUNTS)
     {
         // add accounts
-        if (bOnXRP)
+        if (bOnXDV)
         {
             if (mDstAmount.isNative () && !currentPath.empty ())
-            { // non-default path to XRP destination
+            { // non-default path to XDV destination
                 WriteLog (lsTRACE, Pathfinder)
                     << "complete path found ax: " << currentPath.getJson(0);
                 addUniquePath (mCompletePaths, currentPath);
@@ -1056,17 +1056,17 @@ void Pathfinder::addLink (
     if (addFlags & afADD_BOOKS)
     {
         // add order books
-        if (addFlags & afOB_XRP)
+        if (addFlags & afOB_XDV)
         {
-            // to XRP only
-            if (!bOnXRP && getApp ().getOrderBookDB ().isBookToXRP (
+            // to XDV only
+            if (!bOnXDV && getApp ().getOrderBookDB ().isBookToXDV (
                     {uEndCurrency, uEndIssuer}))
             {
                 STPathElement pathElement(
                     STPathElement::typeCurrency,
-                    xrpAccount (),
-                    xrpCurrency (),
-                    xrpAccount ());
+                    xdvAccount (),
+                    xdvCurrency (),
+                    xdvAccount ());
                 incompletePaths.assembleAdd (currentPath, pathElement);
             }
         }
@@ -1081,7 +1081,7 @@ void Pathfinder::addLink (
             for (auto const& book : books)
             {
                 if (!currentPath.hasSeen (
-                        xrpAccount(),
+                        xdvAccount(),
                         book->getCurrencyOut (),
                         book->getIssuerOut ()) &&
                     !issueMatchesOrigin (book->book ().out) &&
@@ -1091,18 +1091,18 @@ void Pathfinder::addLink (
                     STPath newPath (currentPath);
 
                     if (book->getCurrencyOut().isZero())
-                    { // to XRP
+                    { // to XDV
 
                         // add the order book itself
                         newPath.emplace_back (
                             STPathElement::typeCurrency,
-                            xrpAccount (),
-                            xrpCurrency (),
-                            xrpAccount ());
+                            xdvAccount (),
+                            xdvCurrency (),
+                            xdvAccount ());
 
                         if (mDstAmount.getCurrency ().isZero ())
                         {
-                            // destination is XRP, add account and path is
+                            // destination is XDV, add account and path is
                             // complete
                             WriteLog (lsTRACE, Pathfinder)
                                 << "complete path found bx: "
@@ -1126,7 +1126,7 @@ void Pathfinder::addLink (
                             // replace the redundant account with the order book
                             newPath[newPath.size() - 1] = STPathElement (
                                 STPathElement::typeCurrency | STPathElement::typeIssuer,
-                                xrpAccount(), book->getCurrencyOut(),
+                                xdvAccount(), book->getCurrencyOut(),
                                 book->getIssuerOut());
                         }
                         else
@@ -1134,7 +1134,7 @@ void Pathfinder::addLink (
                             // add the order book
                             newPath.emplace_back(
                                 STPathElement::typeCurrency | STPathElement::typeIssuer,
-                                xrpAccount(), book->getCurrencyOut(),
+                                xdvAccount(), book->getCurrencyOut(),
                                 book->getIssuerOut());
                         }
 
@@ -1191,8 +1191,8 @@ Pathfinder::PathType makePath (char const *string)
                 ret.push_back (Pathfinder::nt_BOOKS);
                 break;
 
-            case 'x': // xrp book
-                ret.push_back (Pathfinder::nt_XRP_BOOK);
+            case 'x': // xdv book
+                ret.push_back (Pathfinder::nt_XDV_BOOK);
                 break;
 
             case 'f': // book to final currency
@@ -1234,10 +1234,10 @@ void Pathfinder::initPathTable ()
     // CAUTION: Do not include rules that build default paths
 
     mPathTable.clear();
-    fillPaths (pt_XRP_to_XRP, {});
+    fillPaths (pt_XDV_to_XDV, {});
 
     fillPaths(
-        pt_XRP_to_nonXRP, {
+        pt_XDV_to_nonXDV, {
             {1, "sfd"},   // source -> book -> gateway
             {3, "sfad"},  // source -> book -> account -> destination
             {5, "sfaad"}, // source -> book -> account -> account -> destination
@@ -1248,18 +1248,18 @@ void Pathfinder::initPathTable ()
         });
 
     fillPaths(
-        pt_nonXRP_to_XRP, {
-            {1, "sxd"},       // gateway buys XRP
-            {2, "saxd"},      // source -> gateway -> book(XRP) -> dest
+        pt_nonXDV_to_XDV, {
+            {1, "sxd"},       // gateway buys XDV
+            {2, "saxd"},      // source -> gateway -> book(XDV) -> dest
             {6, "saaxd"},
             {7, "sbxd"},
             {8, "sabxd"},
             {9, "sabaxd"}
         });
 
-    // non-XRP to non-XRP (same currency)
+    // non-XDV to non-XDV (same currency)
     fillPaths(
-        pt_nonXRP_to_same,  {
+        pt_nonXDV_to_same,  {
             {1, "sad"},     // source -> gateway -> destination
             {1, "sfd"},     // source -> book -> destination
             {4, "safd"},    // source -> gateway -> book -> destination
@@ -1268,16 +1268,16 @@ void Pathfinder::initPathTable ()
             {5, "sbfd"},
             {6, "sxfad"},
             {6, "safad"},
-            {6, "saxfd"},   // source -> gateway -> book to XRP -> book ->
+            {6, "saxfd"},   // source -> gateway -> book to XDV -> book ->
                             // destination
             {6, "saxfad"},
             {6, "sabfd"},   // source -> gateway -> book -> book -> destination
             {7, "saaad"},
         });
 
-    // non-XRP to non-XRP (different currency)
+    // non-XDV to non-XDV (different currency)
     fillPaths(
-        pt_nonXRP_to_nonXRP, {
+        pt_nonXDV_to_nonXDV, {
             {1, "sfad"},
             {1, "safd"},
             {3, "safad"},

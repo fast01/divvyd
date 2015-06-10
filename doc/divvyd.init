@@ -7,20 +7,20 @@
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
 # Short-Description: starts the ripple network node
-# Description:       starts rippled using start-stop-daemon
+# Description:       starts divvyd using start-stop-daemon
 ### END INIT INFO
 
 set -e
 
-NAME=rippled
-USER="rippled"
-GROUP="rippled"
+NAME=divvyd
+USER="divvyd"
+GROUP="divvyd"
 PIDFILE=/var/run/$NAME.pid
-DAEMON=/usr/local/sbin/rippled
-DAEMON_OPTS="--conf /etc/ripple/rippled.cfg"
+DAEMON=/usr/local/sbin/divvyd
+DAEMON_OPTS="--conf /etc/ripple/divvyd.cfg"
 NET_OPTS="--net $DAEMON_OPTS"
-LOGDIR="/var/log/rippled"
-DBDIR="/var/db/rippled/db/hyperldb"
+LOGDIR="/var/log/divvyd"
+DBDIR="/var/db/divvyd/db/hyperldb"
 
 export PATH="${PATH:+$PATH:}/usr/sbin:/sbin"
 
@@ -94,7 +94,7 @@ case "$1" in
         # this entry.
         shift
 
-        # Pass the remainder of the argument vector to rippled.
+        # Pass the remainder of the argument vector to divvyd.
         $DAEMON $DAEMON_OPTS "$@"
         echo "."
         ;;

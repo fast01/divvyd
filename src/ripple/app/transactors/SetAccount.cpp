@@ -91,12 +91,12 @@ public:
         }
 
         //
-        // DisallowXRP
+        // DisallowXDV
         //
-        bool bSetDisallowXRP   = (uTxFlags & tfDisallowXRP) || (uSetFlag == asfDisallowXRP);
-        bool bClearDisallowXRP = (uTxFlags & tfAllowXRP) || (uClearFlag == asfDisallowXRP);
+        bool bSetDisallowXDV   = (uTxFlags & tfDisallowXDV) || (uSetFlag == asfDisallowXDV);
+        bool bClearDisallowXDV = (uTxFlags & tfAllowXDV) || (uClearFlag == asfDisallowXDV);
 
-        if (bSetDisallowXRP && bClearDisallowXRP)
+        if (bSetDisallowXDV && bClearDisallowXDV)
         {
             m_journal.trace << "Malformed transaction: Contradictory flags set.";
             return temINVALID_FLAG;
@@ -132,8 +132,8 @@ public:
         bool bClearRequireDest = (uTxFlags & tfOptionalDestTag) || (uClearFlag == asfRequireDest);
         bool bSetRequireAuth   = (uTxFlags & tfRequireAuth) || (uSetFlag == asfRequireAuth);
         bool bClearRequireAuth = (uTxFlags & tfOptionalAuth) || (uClearFlag == asfRequireAuth);
-        bool bSetDisallowXRP   = (uTxFlags & tfDisallowXRP) || (uSetFlag == asfDisallowXRP);
-        bool bClearDisallowXRP = (uTxFlags & tfAllowXRP) || (uClearFlag == asfDisallowXRP);
+        bool bSetDisallowXDV   = (uTxFlags & tfDisallowXDV) || (uSetFlag == asfDisallowXDV);
+        bool bClearDisallowXDV = (uTxFlags & tfAllowXDV) || (uClearFlag == asfDisallowXDV);
 
         //
         // RequireAuth
@@ -172,18 +172,18 @@ public:
         }
 
         //
-        // DisallowXRP
+        // DisallowXDV
         //
-        if (bSetDisallowXRP && !(uFlagsIn & lsfDisallowXRP))
+        if (bSetDisallowXDV && !(uFlagsIn & lsfDisallowXDV))
         {
-            m_journal.trace << "Set lsfDisallowXRP.";
-            uFlagsOut |= lsfDisallowXRP;
+            m_journal.trace << "Set lsfDisallowXDV.";
+            uFlagsOut |= lsfDisallowXDV;
         }
 
-        if (bClearDisallowXRP && (uFlagsIn & lsfDisallowXRP))
+        if (bClearDisallowXDV && (uFlagsIn & lsfDisallowXDV))
         {
-            m_journal.trace << "Clear lsfDisallowXRP.";
-            uFlagsOut &= ~lsfDisallowXRP;
+            m_journal.trace << "Clear lsfDisallowXDV.";
+            uFlagsOut &= ~lsfDisallowXDV;
         }
 
         //

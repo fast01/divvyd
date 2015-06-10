@@ -5,7 +5,7 @@ Utility functions and classes.
 ripple/basic should contain no dependencies on other modules.
 
 
-Choosing a rippled container.
+Choosing a divvyd container.
 =============================
 
 * `std::vector`

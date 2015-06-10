@@ -61,8 +61,8 @@ class LedgerMaster;
     needed.
 
     A backend application or local client can trust a local instance of
-    rippled / NetworkOPs. However, client software connecting to non-local
-    instances of rippled will need to be hardened to protect against hostile
+    divvyd / NetworkOPs. However, client software connecting to non-local
+    instances of divvyd will need to be hardened to protect against hostile
     or unreliable servers.
 */
 class NetworkOPs

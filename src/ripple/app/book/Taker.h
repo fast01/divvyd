@@ -90,7 +90,7 @@ protected:
 
         bool sanity_check () const
         {
-            if (isXRP (order.in) && isXRP (order.out))
+            if (isXDV (order.in) && isXDV (order.out))
                 return false;
 
             return order.in >= zero &&
@@ -102,12 +102,12 @@ protected:
 
 private:
     Flow
-    flow_xrp_to_iou (Amounts const& offer, Quality quality,
+    flow_xdv_to_iou (Amounts const& offer, Quality quality,
         Amount const& owner_funds, Amount const& taker_funds,
         Rate const& rate_out);
 
     Flow
-    flow_iou_to_xrp (Amounts const& offer, Quality quality,
+    flow_iou_to_xdv (Amounts const& offer, Quality quality,
         Amount const& owner_funds, Amount const& taker_funds,
         Rate const& rate_in);
 
@@ -233,8 +233,8 @@ private:
     // The underlying ledger entry we are dealing with
     LedgerView& m_view;
 
-    // The amount of XRP that flowed if we were autobridging
-    STAmount xrp_flow_;
+    // The amount of XDV that flowed if we were autobridging
+    STAmount xdv_flow_;
 
     // The number direct crossings that we performed
     std::uint32_t direct_crossings_;
@@ -251,7 +251,7 @@ private:
         BasicTaker::Flow const& flow2, Offer const& leg2);
 
     TER
-    transfer_xrp (Account const& from, Account const& to, Amount const& amount);
+    transfer_xdv (Account const& from, Account const& to, Amount const& amount);
 
     TER
     redeem_iou (Account const& account, Amount const& amount, Issue const& issue);
@@ -274,9 +274,9 @@ public:
     get_funds (Account const& account, Amount const& funds) const;
 
     STAmount const&
-    get_xrp_flow () const
+    get_xdv_flow () const
     {
-        return xrp_flow_;
+        return xdv_flow_;
     }
 
     std::uint32_t

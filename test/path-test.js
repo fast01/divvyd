@@ -898,9 +898,9 @@ suite('More path finding', function() {
       testutils.build_teardown().call($, done);
     });
 
-    //carol holds mtgoxAUD, sells mtgoxAUD for XRP
+    //carol holds mtgoxAUD, sells mtgoxAUD for XDV
       //bob will hold mtgoxAUD
-    //alice pays bob mtgoxAUD using XRP
+    //alice pays bob mtgoxAUD using XDV
     test("via gateway", function (done) {
       var self = this;
 
@@ -955,7 +955,7 @@ suite('More path finding', function() {
         .submit();
       },
       function (callback) {
-        self.what = "Alice sends bob 10/AUD/mtgox using XRP.";
+        self.what = "Alice sends bob 10/AUD/mtgox using XDV.";
 
         //XXX Also try sending 10/AUX/bob
         $.remote.transaction()
@@ -1010,10 +1010,10 @@ suite('More path finding', function() {
       });
     });
 
-    //carol holds mtgoxAUD, sells mtgoxAUD for XRP
+    //carol holds mtgoxAUD, sells mtgoxAUD for XDV
     //bob will hold mtgoxAUD
-    //alice pays bob mtgoxAUD using XRP
-    test.skip("via gateway : FIX ME fails due to XRP rounding and not properly handling dry.", function (done) {
+    //alice pays bob mtgoxAUD using XDV
+    test.skip("via gateway : FIX ME fails due to XDV rounding and not properly handling dry.", function (done) {
       var self = this;
 
       async.waterfall([
@@ -1067,7 +1067,7 @@ suite('More path finding', function() {
         .submit();
       },
       function (callback) {
-        self.what = "Alice sends bob 10/AUD/mtgox using XRP.";
+        self.what = "Alice sends bob 10/AUD/mtgox using XDV.";
 
         // XXX Also try sending 10/AUX/bob
         $.remote.transaction()

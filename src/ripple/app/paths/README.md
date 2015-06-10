@@ -11,29 +11,29 @@ By the time a transaction is processed, liquidity may be taken or added. This is
 
 People are given estimates so they can make a decision as to whether the overall cost is good enough for them.
 
-This is the **rippled** implementation; there are many other possible implementations!
+This is the **divvyd** implementation; there are many other possible implementations!
 
-**rippled** uses a variety of search techniques:
+**divvyd** uses a variety of search techniques:
 
 1. Hebbian learning.
  * Reuse found liquidity.
  * Good liquidity is often reusable.
- * When searching, limit our search to the rippled cache.
+ * When searching, limit our search to the divvyd cache.
 2. Six degrees of separation.
  * If sending value through individual's account, expect no path to have more than six hops.
  * According to [Facebook studies](https://www.facebook.com/notes/facebook-data-team/anatomy-of-facebook/10150388519243859) as of late 2011, its users are separated by fewer than five steps.
- * By using XRP for bridging the most complicated path expected is usually:
- * source -> gateway -> XRP -> gateway -> destination
+ * By using XDV for bridging the most complicated path expected is usually:
+ * source -> gateway -> XDV -> gateway -> destination
 3. Pareto principle.
  * Good liquidity is often reusable.
  * Concentrate on the most liquid gateways to serve almost everybody.
  * People who chose to use illiquid gateways get the service level implied by their choice of poor liquidity.
 4. Monte Carlo methods.
  * Learn new paths.
- * Search outside the **rippled** cache.
+ * Search outside the **divvyd** cache.
  * Distributed learning.
- * Every rippled node searches their own cache for best liquidity and then the good results get propagated to the network.
- * Whenever somebody makes a payment, the nodes involved go to the rippled cache; since payments appear in every ledger in the network, this liquidity information now appears in every rippled cache.
+ * Every divvyd node searches their own cache for best liquidity and then the good results get propagated to the network.
+ * Whenever somebody makes a payment, the nodes involved go to the divvyd cache; since payments appear in every ledger in the network, this liquidity information now appears in every divvyd cache.
 
 
 Life of a Payment
@@ -48,7 +48,7 @@ There are various stages:
 
 An issue is a balance in some specific currency.  An issuer is someone who "creates" a currency by creating an issue.
 
-For tx processing, people submit a tx to a rippled node, which attempts to apply the tx locally first, and if succeesful, distributes it to other nodes.
+For tx processing, people submit a tx to a divvyd node, which attempts to apply the tx locally first, and if succeesful, distributes it to other nodes.
 
 When someone accepts payment they list their specific payment terms, "what must happen before the payment goes off."  That can be done completely in the Ripple Network.  Normally a payment on the Ripple net can be completely settled there.  When the ledger closes, the terms are met, or they are not met.
 
@@ -80,16 +80,16 @@ Not implemented: bridge types.
 High level of a payment
 -----------------------
 
-1. I make a request for path finding to a rippled.
-2. That rippled "continuously" returns solutions until I "stop".
+1. I make a request for path finding to a divvyd.
+2. That divvyd "continuously" returns solutions until I "stop".
 3. You create a transaction which includes the path set that you got from the quote.
 4. You sign it.
-5. You submit it to one or more rippleds.
-6. Those rippled validates it, and forwards it if it;s valid.
+5. You submit it to one or more divvyds.
+6. Those divvyd validates it, and forwards it if it;s valid.
  * valid means "not malformed" and "can claim a fee" - the sending account has enough to cover the transaction fee.
 7. At ledger closing time, the transaction is applied by the transaction engine and the result is stored by changing the ledger and storing the tx metadata in that ledger.
 
-If you're sending and receiving XRP you don't need a path.
+If you're sending and receiving XDV you don't need a path.
 If the union of the default paths are sufficient, you don't need a path set (see below about default paths).
 The idea behind path sets is to provide sufficient liquidity in the face of a changing ledger.
 
@@ -112,14 +112,14 @@ If you can compute a path already yourself or know one, you don't need to do ste
     * the destination account
     * destination amount
       * contains an amount and a currency
-      * if currency not XRP, must have a specified issuer.
+      * if currency not XDV, must have a specified issuer.
       * If you specify an issuer then you MUST deliver that issuance to the destination.
       * If you specify the issuer as the destination account, then they will receive any of the issuances they trust.
     * maximum source amount - maximum amount to debit the sender.
       * This field is optional.
       * if not specified, defaults to the destination amount with the sender as issuer.
       * contains an amount and a currency
-      * if currency not XRP, must have a specified issuer.
+      * if currency not XDV, must have a specified issuer.
       * specifying the sender as issuer allows any of the sender's issuance to be spent.
       * specifying a specific issuer allows only that specific issuance to be sent.
   * path set.

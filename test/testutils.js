@@ -37,21 +37,21 @@ function(config, host) {
   } else {
     override["no_server"] = process.argv.indexOf("--noserver") > -1;
   }
-  // --rippled -> rippled_path
+  // --divvyd -> divvyd_path
   var index = -1;
-  if (process.env["npm_config_rippled"]) {
-    override["rippled_path"] = path.resolve(process.cwd(),
-        process.env["npm_config_rippled"]);
-  } else if ((index = process.argv.indexOf("--rippled")) > -1) {
+  if (process.env["npm_config_divvyd"]) {
+    override["divvyd_path"] = path.resolve(process.cwd(),
+        process.env["npm_config_divvyd"]);
+  } else if ((index = process.argv.indexOf("--divvyd")) > -1) {
     if (index < process.argv.length) {
-      override["rippled_path"] = path.resolve(process.cwd(),
+      override["divvyd_path"] = path.resolve(process.cwd(),
         process.argv[index + 1]);
     }
   } else {
     for (var i = process.argv.length-1; i >= 0; --i) {
       var arg = process.argv[i].split("=", 2);
-      if (arg.length === 2 && arg[0] === "--rippled") {
-        override["rippled_path"] = path.resolve(process.cwd(), arg[1]);
+      if (arg.length === 2 && arg[0] === "--divvyd") {
+        override["divvyd_path"] = path.resolve(process.cwd(), arg[1]);
         break;
       }
     }
@@ -115,8 +115,8 @@ exports.definer_matching = function(matchers, def) {
  *   and run)
  * @param opts.verbose_ws {Bool} Enable tracing in the Remote class. Prints
  *   websocket traffic.
- * @param opts.verbose_server {Bool} Set the -v option when running rippled.
- * @param opts.no_server {Bool} Don't auto-run rippled.
+ * @param opts.verbose_server {Bool} Set the -v option when running divvyd.
+ * @param opts.no_server {Bool} Don't auto-run divvyd.
  * @param host {String} Identifier for the host configuration to be used.
  */
 function build_setup(opts, host) {
@@ -334,7 +334,7 @@ function(remote, src, account, amount, options, callback) {
       return callback(result);
     }
 
-    // rippled indicated the account does not exist. Create it by funding it.
+    // divvyd indicated the account does not exist. Create it by funding it.
     fund_account(remote, src, account, amount, callback);
   });
 

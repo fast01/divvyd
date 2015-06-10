@@ -67,7 +67,7 @@
 #   Example: google.com
 #
 # [ips]:
-#   Only valid in "rippled.cfg", "ripple.txt", and the referered [ips_url].
+#   Only valid in "divvyd.cfg", "ripple.txt", and the referered [ips_url].
 #   List of ips where the Newcoin protocol is avialable.
 #   One ipv4 or ipv6 address per line.
 #   A port may optionally be specified after adding a space to the address.
@@ -79,10 +79,10 @@
 #    2001:0db8:0100:f101:0210:a4ff:fee3:9566
 #
 # [validators]:
-#   Only valid in "rippled.cfg", "ripple.txt", and the referered [validators_url].
+#   Only valid in "divvyd.cfg", "ripple.txt", and the referered [validators_url].
 #   List of Ripple validators this node recommends.
 #
-#   For domains, rippled will probe for https web servers at the specied
+#   For domains, divvyd will probe for https web servers at the specied
 #   domain in the following order: ripple.DOMAIN, www.DOMAIN, DOMAIN
 #
 #	These are encoded 257-bit secp256k1 public keys.

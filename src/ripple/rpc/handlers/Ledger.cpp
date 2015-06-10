@@ -52,7 +52,7 @@ Status LedgerHandler::check ()
 
     options_ = (bFull ? LedgerFill::full : 0)
             | (bExpand ? LedgerFill::expand : 0)
-            | (bTransactions ? LedgerFill::dumpTxrp : 0)
+            | (bTransactions ? LedgerFill::dumpTxdv : 0)
             | (bAccounts ? LedgerFill::dumpState : 0)
             | (bBinary ? LedgerFill::binary : 0);
 

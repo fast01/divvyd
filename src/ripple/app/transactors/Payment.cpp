@@ -84,8 +84,8 @@ public:
         auto const& uSrcCurrency = maxSourceAmount.getCurrency ();
         auto const& uDstCurrency = saDstAmount.getCurrency ();
 
-        // isZero() is XRP.  FIX!
-        bool const bXRPDirect = uSrcCurrency.isZero () && uDstCurrency.isZero ();
+        // isZero() is XDV.  FIX!
+        bool const bXDVDirect = uSrcCurrency.isZero () && uDstCurrency.isZero ();
 
         if (!isLegalNet (saDstAmount) || !isLegalNet (maxSourceAmount))
             return temBAD_AMOUNT;
@@ -125,40 +125,40 @@ public:
                 " to self without path for " << to_string (uDstCurrency);
             return temREDUNDANT;
         }
-        if (bXRPDirect && bMax)
+        if (bXDVDirect && bMax)
         {
             // Consistent but redundant transaction.
             m_journal.trace << "Malformed transaction: " <<
-                "SendMax specified for XRP to XRP.";
-            return temBAD_SEND_XRP_MAX;
+                "SendMax specified for XDV to XDV.";
+            return temBAD_SEND_XDV_MAX;
         }
-        if (bXRPDirect && bPaths)
+        if (bXDVDirect && bPaths)
         {
-            // XRP is sent without paths.
+            // XDV is sent without paths.
             m_journal.trace << "Malformed transaction: " <<
-                "Paths specified for XRP to XRP.";
-            return temBAD_SEND_XRP_PATHS;
+                "Paths specified for XDV to XDV.";
+            return temBAD_SEND_XDV_PATHS;
         }
-        if (bXRPDirect && partialPaymentAllowed)
-        {
-            // Consistent but redundant transaction.
-            m_journal.trace << "Malformed transaction: " <<
-                "Partial payment specified for XRP to XRP.";
-            return temBAD_SEND_XRP_PARTIAL;
-        }
-        if (bXRPDirect && limitQuality)
+        if (bXDVDirect && partialPaymentAllowed)
         {
             // Consistent but redundant transaction.
             m_journal.trace << "Malformed transaction: " <<
-                "Limit quality specified for XRP to XRP.";
-            return temBAD_SEND_XRP_LIMIT;
+                "Partial payment specified for XDV to XDV.";
+            return temBAD_SEND_XDV_PARTIAL;
         }
-        if (bXRPDirect && !defaultPathsAllowed)
+        if (bXDVDirect && limitQuality)
         {
             // Consistent but redundant transaction.
             m_journal.trace << "Malformed transaction: " <<
-                "No ripple direct specified for XRP to XRP.";
-            return temBAD_SEND_XRP_NO_DIRECT;
+                "Limit quality specified for XDV to XDV.";
+            return temBAD_SEND_XDV_LIMIT;
+        }
+        if (bXDVDirect && !defaultPathsAllowed)
+        {
+            // Consistent but redundant transaction.
+            m_journal.trace << "Malformed transaction: " <<
+                "No ripple direct specified for XDV to XDV.";
+            return temBAD_SEND_XDV_NO_DIRECT;
         }
 
         return Transactor::preCheck ();
@@ -229,7 +229,7 @@ public:
                 // TODO: dedupe
                 // Another transaction could create the account and then this
                 // transaction would succeed.
-                return tecNO_DST_INSUF_XRP;
+                return tecNO_DST_INSUF_XDV;
             }
 
             // Create the account.
@@ -324,7 +324,7 @@ public:
         }
         else
         {
-            // Direct XRP payment.
+            // Direct XDV payment.
 
             // uOwnerCount is the number of entries in this legder for this account
             // that require a reserve.

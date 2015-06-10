@@ -523,7 +523,7 @@ inline std::ostream& operator<< (
     return out << to_string (u);
 }
 
-} // rippled
+} // divvyd
 
 namespace boost
 {

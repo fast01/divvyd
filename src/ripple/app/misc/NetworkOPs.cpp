@@ -2210,13 +2210,13 @@ Json::Value NetworkOPsImp::getServerInfo (bool human, bool admin)
         }
         else
         {
-            l[jss::base_fee_xrp] = static_cast<double> (baseFee) /
+            l[jss::base_fee_xdv] = static_cast<double> (baseFee) /
                     SYSTEM_CURRENCY_PARTS;
-            l[jss::reserve_base_xrp]   =
+            l[jss::reserve_base_xdv]   =
                 static_cast<double> (Json::UInt (
                     lpClosed->getReserve (0) * baseFee / baseRef))
                     / SYSTEM_CURRENCY_PARTS;
-            l[jss::reserve_inc_xrp]    =
+            l[jss::reserve_inc_xdv]    =
                 static_cast<double> (Json::UInt (
                     lpClosed->getReserveInc () * baseFee / baseRef))
                     / SYSTEM_CURRENCY_PARTS;

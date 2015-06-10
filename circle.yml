@@ -24,29 +24,29 @@ test:
       echo "run" >> script.gdb
       echo "backtrace full" >> script.gdb 
       # gdb --help
-    - cat script.gdb | gdb --ex 'set print thread-events off' --return-child-result --args build/clang.debug/rippled --unittest
+    - cat script.gdb | gdb --ex 'set print thread-events off' --return-child-result --args build/clang.debug/divvyd --unittest
     - npm install
-    # Use build/(gcc|clang).debug/rippled
+    # Use build/(gcc|clang).debug/divvyd
     - |
-      echo "exports.default_server_config = {\"rippled_path\" : \"$HOME/rippled/build/clang.debug/rippled\"};" > test/config.js
+      echo "exports.default_server_config = {\"divvyd_path\" : \"$HOME/divvyd/build/clang.debug/divvyd\"};" > test/config.js
 
     # Run integration tests
     - npm test
   post:
     - mkdir -p build/docker/
-    - cp doc/rippled-example.cfg build/clang.debug/rippled build/docker/
+    - cp doc/divvyd-example.cfg build/clang.debug/divvyd build/docker/
     - cp Builds/Docker/Dockerfile-testnet build/docker/Dockerfile
-    - mv build/docker/rippled-example.cfg build/docker/rippled.cfg
-    - strip build/docker/rippled
-    - docker build -t ripple/rippled:$CIRCLE_SHA1 build/docker/
-    - docker tag ripple/rippled:$CIRCLE_SHA1 ripple/rippled:latest
-    - docker tag ripple/rippled:$CIRCLE_SHA1 ripple/rippled:$CIRCLE_BRANCH
+    - mv build/docker/divvyd-example.cfg build/docker/divvyd.cfg
+    - strip build/docker/divvyd
+    - docker build -t ripple/divvyd:$CIRCLE_SHA1 build/docker/
+    - docker tag ripple/divvyd:$CIRCLE_SHA1 ripple/divvyd:latest
+    - docker tag ripple/divvyd:$CIRCLE_SHA1 ripple/divvyd:$CIRCLE_BRANCH
     - docker images
 deployment:
   docker:
     branch: /.*/
     commands:
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-      - docker push ripple/rippled:$CIRCLE_SHA1
-      - docker push ripple/rippled:$CIRCLE_BRANCH
-      - docker push ripple/rippled:latest
+      - docker push ripple/divvyd:$CIRCLE_SHA1
+      - docker push ripple/divvyd:$CIRCLE_BRANCH
+      - docker push ripple/divvyd:latest

@@ -319,7 +319,7 @@ int run (int argc, char** argv)
 
     if (vm.count ("version"))
     {
-        std::cout << "rippled version " <<
+        std::cout << "divvyd version " <<
             BuildInfo::getVersionString () << std::endl;
         return 0;
     }
@@ -513,11 +513,11 @@ int main (int argc, char** argv)
                             __GNUC_PATCHLEVEL__;
 
     static_assert (gccver >= 40801,
-        "GCC version 4.8.1 or later is required to compile rippled.");
+        "GCC version 4.8.1 or later is required to compile divvyd.");
 #endif
 
     static_assert (BOOST_VERSION >= 105700,
-        "Boost version 1.57 or later is required to compile rippled");
+        "Boost version 1.57 or later is required to compile divvyd");
 
     //
     // These debug heap calls do nothing in release or non Visual Studio builds.

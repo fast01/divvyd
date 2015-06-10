@@ -40,8 +40,8 @@ void
 ManagerImp::missing_backend()
 {
     throw std::runtime_error (
-        "Your rippled.cfg is missing a [node_db] entry, "
-        "please see the rippled-example.cfg file!"
+        "Your divvyd.cfg is missing a [node_db] entry, "
+        "please see the divvyd-example.cfg file!"
         );
 }
 

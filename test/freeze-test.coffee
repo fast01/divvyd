@@ -154,7 +154,7 @@ Flags =
       PasswordSpent:   0x00010000
       RequireDestTag:  0x00020000
       RequireAuth:     0x00040000
-      DisallowXRP:     0x00080000
+      DisallowXDV:     0x00080000
       NoFreeze:        0x00200000
       GlobalFreeze:    0x00400000
 
@@ -536,7 +536,7 @@ execute_if_enabled (suite, enforced) ->
           test 'where taker_gets is $unfrozen_issuer', (done) ->
             {remote} = h = get_helpers()
 
-            h.book_offers 'XRP', 'USD/G1', (book) ->
+            h.book_offers 'XDV', 'USD/G1', (book) ->
               assert.equal book.offers.length, 2
 
               aliases = (h.alias_for(o.Account) for o in book.offers).sort()
@@ -547,7 +547,7 @@ execute_if_enabled (suite, enforced) ->
               done()
 
           test 'where taker_pays is $unfrozen_issuer', (done) ->
-            h.book_offers 'USD/G1', 'XRP', (book) ->
+            h.book_offers 'USD/G1', 'XDV', (book) ->
 
               assert.equal book.offers.length, 2
               aliases = (h.alias_for(o.Account) for o in book.offers).sort()
@@ -628,7 +628,7 @@ execute_if_enabled (suite, enforced) ->
           test.skip 'books_offers(*, $frozen_account/*) shows offers '+
                'owned by $frozen_account only', (done) ->
 
-            h.book_offers 'XRP', 'USD/G1', (book) ->
+            h.book_offers 'XDV', 'USD/G1', (book) ->
               # h.alog book.offers
               assert.equal book.offers.length, 1
               done()
@@ -636,14 +636,14 @@ execute_if_enabled (suite, enforced) ->
           test.skip 'books_offers($frozen_account/*, *) shows '+
                     'no offers', (done) ->
 
-            h.book_offers 'USD/G1', 'XRP', (book) ->
+            h.book_offers 'USD/G1', 'XDV', (book) ->
               assert.equal book.offers.length, 0
               done()
 
           test_if enforced, 'books_offers(*, $frozen_account/*) shows offers '+
                'owned by $frozen_account only (broken) ', (done) ->
 
-            h.book_offers 'XRP', 'USD/G1', (book) ->
+            h.book_offers 'XDV', 'USD/G1', (book) ->
               # h.alog book.offers
               assert.equal book.offers.length, 2
               done()
@@ -651,7 +651,7 @@ execute_if_enabled (suite, enforced) ->
           test_if enforced, 'books_offers($frozen_account/*, *) '+
                             'shows no offers (broken)', (done) ->
 
-            h.book_offers 'USD/G1', 'XRP', (book) ->
+            h.book_offers 'USD/G1', 'XDV', (book) ->
               assert.equal book.offers.length, 2
               done()
 

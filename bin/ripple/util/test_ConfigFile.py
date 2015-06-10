@@ -90,7 +90,7 @@ full
 [node_size]
 medium
 
-# This is primary persistent datastore for rippled.  This includes transaction
+# This is primary persistent datastore for divvyd.  This includes transaction
 # metadata, account states, and ledger headers.  Helpful information can be
 # found here: https://ripple.com/wiki/NodeBackEnd
 [node_db]

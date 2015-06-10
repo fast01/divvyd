@@ -1,7 +1,7 @@
 #Benchmarks
 
 ```
-$rippled --unittest=NodeStoreTiming --unittest-arg="type=rocksdb,num_objects=2000000,open_files=2000,filter_bits=12,cache_mb=256,file_size_mb=8,file_size_mult=2;type=rocksdbquick,num_objects=2000000"
+$divvyd --unittest=NodeStoreTiming --unittest-arg="type=rocksdb,num_objects=2000000,open_files=2000,filter_bits=12,cache_mb=256,file_size_mb=8,file_size_mult=2;type=rocksdbquick,num_objects=2000000"
 2014-Nov-01 21:49:02 Validators:NFO Validators constructed (info)
 ripple.bench.NodeStoreTiming repeatableObject
  Config Run       Inserts  Batch Insert   Fetch 50/50 Ordered Fetch  Fetch Random Fetch Missing
@@ -19,11 +19,11 @@ Configs:
 
 ##Discussion
 
-RocksDBQuickFactory is intended to provide a testbed for comparing potential rocksdb performance with the existing recommended configuration in rippled.cfg. Through various executions and profiling some conclusions are presented below.
+RocksDBQuickFactory is intended to provide a testbed for comparing potential rocksdb performance with the existing recommended configuration in divvyd.cfg. Through various executions and profiling some conclusions are presented below.
 
-* If the write ahead log is enabled, insert speed soon clogs up under load. The BatchWriter class intends to stop this from blocking the main threads by queuing up writes and running them in a separate thread. However, rocksdb already has separate threads dedicated to flushing the memtable to disk and the memtable is itself an in-memory queue. The result is two queues with a guarantee of durability in between. However if the memtable was used as the sole queue and the rocksdb::Flush() call was manually triggered at opportune moments, possibly just after ledger close, then that would provide similar, but more predictable guarantees. It would also remove an unneeded thread and unnecessary memory usage. An alternative point of view is that because there will always be many other rippled instances running there is no need for such guarantees. The nodes will always be available from another peer.
+* If the write ahead log is enabled, insert speed soon clogs up under load. The BatchWriter class intends to stop this from blocking the main threads by queuing up writes and running them in a separate thread. However, rocksdb already has separate threads dedicated to flushing the memtable to disk and the memtable is itself an in-memory queue. The result is two queues with a guarantee of durability in between. However if the memtable was used as the sole queue and the rocksdb::Flush() call was manually triggered at opportune moments, possibly just after ledger close, then that would provide similar, but more predictable guarantees. It would also remove an unneeded thread and unnecessary memory usage. An alternative point of view is that because there will always be many other divvyd instances running there is no need for such guarantees. The nodes will always be available from another peer.
 
-* Lookup in a block was previously using binary search. With rippled's use case it is highly unlikely that two adjacent key/values will ever be requested one after the other. Therefore hash indexing of blocks makes much more sense. Rocksdb has a number of options for hash indexing both memtables and blocks and these need more testing to find the best choice.
+* Lookup in a block was previously using binary search. With divvyd's use case it is highly unlikely that two adjacent key/values will ever be requested one after the other. Therefore hash indexing of blocks makes much more sense. Rocksdb has a number of options for hash indexing both memtables and blocks and these need more testing to find the best choice.
 
 * The current Database implementation has two forms of caching, so the LRU cache of blocks at Factory level does not make any sense. However, if the hash indexing and potentially the new [bloom filter](http://rocksdb.org/blog/1427/new-bloom-filter-format/) can provide faster lookup for non-existent keys, then potentially the caching could exist at Factory level.
 

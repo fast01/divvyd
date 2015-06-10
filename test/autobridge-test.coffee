@@ -55,8 +55,8 @@ dump_rpc_script = (ledger_state, test_decl) ->
     # TakerPays: pays
     # TakerGets: gets
 
-  lines += "\nbuild/rippled submit #{account} '#{JSON.stringify tx_json}'"
-  lines += "\nbuild/rippled ledger_accept\n"
+  lines += "\nbuild/divvyd submit #{account} '#{JSON.stringify tx_json}'"
+  lines += "\nbuild/divvyd ledger_accept\n"
   fs.writeFileSync(__dirname + '/../manual-offer-test.sh', lines)
 
 dump_aliased_ledger = (pre_or_post, ledger_state, done) ->

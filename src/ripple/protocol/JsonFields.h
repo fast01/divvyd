@@ -77,7 +77,7 @@ JSS ( authorized );                 // out: AccountLines
 JSS ( balance );                    // out: AccountLines
 JSS ( base );                       // out: LogLevel
 JSS ( base_fee );                   // out: NetworkOPs
-JSS ( base_fee_xrp );               // out: NetworkOPs
+JSS ( base_fee_xdv );               // out: NetworkOPs
 JSS ( bids );                       // out: Subscribe
 JSS ( binary );                     // in: AccountTX, LedgerEntry,
                                     //     AccountTxOld, Tx LedgerData
@@ -285,9 +285,9 @@ JSS ( regular_seed );               // in/out: LedgerEntry
 JSS ( remote );                     // out: Logic.h
 JSS ( request );                    // RPC
 JSS ( reserve_base );               // out: NetworkOPs
-JSS ( reserve_base_xrp );           // out: NetworkOPs
+JSS ( reserve_base_xdv );           // out: NetworkOPs
 JSS ( reserve_inc );                // out: NetworkOPs
-JSS ( reserve_inc_xrp );            // out: NetworkOPs
+JSS ( reserve_inc_xdv );            // out: NetworkOPs
 JSS ( response );                   // websocket
 JSS ( result );                     // RPC
 JSS ( ripple_lines );               // out: NetworkOPs

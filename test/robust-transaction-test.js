@@ -59,7 +59,7 @@ make_suite('Robust transaction submission', function() {
         var tx = $.remote.transaction().payment({
           from: 'root',
           to: 'alice',
-          amount: Amount.from_human('1 XRP')
+          amount: Amount.from_human('1 XDV')
         });
 
         tx.once('submitted', function(m) {
@@ -84,7 +84,7 @@ make_suite('Robust transaction submission', function() {
         var tx = $.remote.transaction().payment({
           from:    'root',
           to:      'bob',
-          amount:  Amount.from_human('1 XRP')
+          amount:  Amount.from_human('1 XDV')
         });
 
         tx.on('submitted', function(m) {
@@ -165,7 +165,7 @@ make_suite('Robust transaction submission', function() {
         var tx = $.remote.transaction().payment({
           from: 'root',
           to: 'alice',
-          amount: Amount.from_human('1 XRP')
+          amount: Amount.from_human('1 XDV')
         });
 
         tx.submit();
@@ -245,7 +245,7 @@ make_suite('Robust transaction submission', function() {
         var tx = $.remote.transaction().payment({
           from: 'root',
           to: 'alice',
-          amount: Amount.from_human('1 XRP')
+          amount: Amount.from_human('1 XDV')
         });
 
         tx.once('submitted', function(m) {
@@ -338,7 +338,7 @@ make_suite('Robust transaction submission', function() {
         var tx = $.remote.transaction().payment({
           from: 'root',
           to: 'alice',
-          amount: Amount.from_human('1 XRP')
+          amount: Amount.from_human('1 XDV')
         });
 
         var timed_out = false;

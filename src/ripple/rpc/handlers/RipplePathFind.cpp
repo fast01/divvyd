@@ -82,7 +82,7 @@ Json::Value doRipplePathFind (RPC::Context& context)
         !context.params.isMember (jss::destination_amount)
         || ! amountFromJsonNoThrow(saDstAmount, context.params[jss::destination_amount])
         || saDstAmount <= zero
-        || (!isXRP(saDstAmount.getCurrency ())
+        || (!isXDV(saDstAmount.getCurrency ())
             && (!saDstAmount.getIssuer () ||
                 noAccount() == saDstAmount.getIssuer ())))
     {
@@ -272,9 +272,9 @@ ripplePathFind(RippleLineCache::pointer const& cache,
         else
         {
             auto& issuer =
-                isXRP(uSrcIssuerID) ?
-                isXRP(uSrcCurrencyID) ? // Default to source account.
-                xrpAccount() :
+                isXDV(uSrcIssuerID) ?
+                isXDV(uSrcCurrencyID) ? // Default to source account.
+                xdvAccount() :
                 Account(raSrc.getAccountID())
                 : uSrcIssuerID;            // Use specifed issuer.
 

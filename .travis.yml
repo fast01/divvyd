@@ -37,8 +37,8 @@ script:
   # $CC will be either `clang` or `gcc` (If only we could do -j12 ;)
   - scons $CC.debug
   # We can be sure we're using the build/$CC.debug variant (-f so never err)
-  - rm -f build/rippled 
-  - export RIPPLED_PATH="$PWD/build/$CC.debug/rippled"
+  - rm -f build/divvyd 
+  - export RIPPLED_PATH="$PWD/build/$CC.debug/divvyd"
   # See what we've actually built
   - ldd $RIPPLED_PATH
   # Run unittests (under gdb)
@@ -49,9 +49,9 @@ script:
     # gdb --help
   - cat script.gdb | gdb --ex 'set print thread-events off' --return-child-result --args $RIPPLED_PATH --unittest
   - npm install
-  # Use build/(gcc|clang).debug/rippled
+  # Use build/(gcc|clang).debug/divvyd
   - |
-    echo "exports.default_server_config = {\"rippled_path\" : \"$RIPPLED_PATH\"};" > test/config.js
+    echo "exports.default_server_config = {\"divvyd_path\" : \"$RIPPLED_PATH\"};" > test/config.js
 
   # Run integration tests
   - npm test

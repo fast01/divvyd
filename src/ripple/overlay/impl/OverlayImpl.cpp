@@ -475,7 +475,7 @@ OverlayImpl::onPrepare()
             });
     }
 
-    // Add the ips_fixed from the rippled.cfg file
+    // Add the ips_fixed from the divvyd.cfg file
     if (! getConfig ().RUN_STANDALONE && !getConfig ().IPS_FIXED.empty ())
     {
         m_resolver.resolve (getConfig ().IPS_FIXED,

@@ -11,7 +11,7 @@
 # [validators]:
 #   List of nodes to accept as validators specified by public key or domain.
 #
-#   For domains, rippled will probe for https web servers at the specified
+#   For domains, divvyd will probe for https web servers at the specified
 #   domain in the following order: ripple.DOMAIN, www.DOMAIN, DOMAIN
 #
 #   Examples: redstem.com

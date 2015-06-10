@@ -26,13 +26,13 @@ class Ledger_test : public beast::unit_test::suite
 {
     void test_genesisLedger (bool sign, KeyType keyType)
     {
-        std::uint64_t const xrp = std::mega::num;
+        std::uint64_t const xdv = std::mega::num;
 
         auto master = createAccount ("masterpassphrase", keyType);
         
         Ledger::pointer LCL;
         Ledger::pointer ledger;
-        std::tie(LCL, ledger) = createGenesisLedger(100000*xrp, master);
+        std::tie(LCL, ledger) = createGenesisLedger(100000*xdv, master);
 
         // User accounts
         auto gw1 = createAccount ("gw1", keyType);
@@ -44,11 +44,11 @@ class Ledger_test : public beast::unit_test::suite
         auto mark = createAccount ("mark", keyType);
 
         // Fund gw1, gw2, gw3, alice, mark from master
-        pay(master, gw1, 5000 * xrp, ledger, sign);
-        pay(master, gw2, 4000 * xrp, ledger, sign);
-        pay(master, gw3, 3000 * xrp, ledger, sign);
-        pay(master, alice, 2000 * xrp, ledger, sign);
-        pay(master, mark, 1000 * xrp, ledger, sign);
+        pay(master, gw1, 5000 * xdv, ledger, sign);
+        pay(master, gw2, 4000 * xdv, ledger, sign);
+        pay(master, gw3, 3000 * xdv, ledger, sign);
+        pay(master, alice, 2000 * xdv, ledger, sign);
+        pay(master, mark, 1000 * xdv, ledger, sign);
 
         close_and_advance(ledger, LCL);
 
@@ -83,7 +83,7 @@ class Ledger_test : public beast::unit_test::suite
 
         close_and_advance(ledger, LCL);
 
-        pay(alice, mark, 1 * xrp, ledger, sign);
+        pay(alice, mark, 1 * xdv, ledger, sign);
 
         close_and_advance(ledger, LCL);
 
@@ -92,17 +92,17 @@ class Ledger_test : public beast::unit_test::suite
 
     void test_unsigned_fails (KeyType keyType)
     {
-        std::uint64_t const xrp = std::mega::num;
+        std::uint64_t const xdv = std::mega::num;
 
         auto master = createAccount ("masterpassphrase", keyType);
 
         Ledger::pointer LCL;
         Ledger::pointer ledger;
-        std::tie(LCL, ledger) = createGenesisLedger (100000 * xrp, master);
+        std::tie(LCL, ledger) = createGenesisLedger (100000 * xdv, master);
 
         auto gw1 = createAccount ("gw1", keyType);
 
-        auto tx = getPaymentTx(master, gw1, 5000 * xrp, false);
+        auto tx = getPaymentTx(master, gw1, 5000 * xdv, false);
 
         try
         {

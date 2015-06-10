@@ -37,9 +37,9 @@ namespace path {
 // Then, compute current node's output for next node.
 // - Current node: specify what to push through to next.
 // - Output to next node is computed as input minus quality or transfer fee.
-// - If next node is an offer and output is non-XRP then we are the issuer and
+// - If next node is an offer and output is non-XDV then we are the issuer and
 //   do not need to push funds.
-// - If next node is an offer and output is XRP then we need to deliver funds to
+// - If next node is an offer and output is XDV then we need to deliver funds to
 //   limbo.
 TER PathCursor::forwardLiquidityForAccount () const
 {
@@ -284,7 +284,7 @@ TER PathCursor::forwardLiquidityForAccount () const
 
         if (nodeIndex_)
         {
-            // Non-XRP, current node is the issuer.
+            // Non-XDV, current node is the issuer.
             WriteLog (lsTRACE, RippleCalc)
                 << "forwardLiquidityForAccount: account --> "
                 << "ACCOUNT --> offer";
@@ -349,15 +349,15 @@ TER PathCursor::forwardLiquidityForAccount () const
                 node().saFwdDeliver = std::min (
                     node().saFwdDeliver, pathState_.inReq() - pathState_.inAct());
 
-                // Limit XRP by available. No limit for non-XRP as issuer.
-                if (isXRP (node().issue_))
+                // Limit XDV by available. No limit for non-XDV as issuer.
+                if (isXDV (node().issue_))
                     node().saFwdDeliver = std::min (
                         node().saFwdDeliver,
                         ledger().accountHolds (
                             node().account_,
-                            xrpCurrency(),
-                            xrpAccount(),
-                            fhIGNORE_FREEZE)); // XRP can't be frozen
+                            xdvCurrency(),
+                            xdvAccount(),
+                            fhIGNORE_FREEZE)); // XDV can't be frozen
 
             }
 
@@ -368,15 +368,15 @@ TER PathCursor::forwardLiquidityForAccount () const
             {
                 resultCode   = tecPATH_DRY;
             }
-            else if (!isXRP (node().issue_))
+            else if (!isXDV (node().issue_))
             {
-                // Non-XRP, current node is the issuer.
+                // Non-XDV, current node is the issuer.
                 // We could be delivering to multiple accounts, so we don't know
                 // which ripple balance will be adjusted.  Assume just issuing.
 
                 WriteLog (lsTRACE, RippleCalc)
                     << "forwardLiquidityForAccount: ^ --> "
-                    << "ACCOUNT -- !XRP --> offer";
+                    << "ACCOUNT -- !XDV --> offer";
 
                 // As the issuer, would only issue.
                 // Don't need to actually deliver. As from delivering leave in
@@ -386,11 +386,11 @@ TER PathCursor::forwardLiquidityForAccount () const
             {
                 WriteLog (lsTRACE, RippleCalc)
                     << "forwardLiquidityForAccount: ^ --> "
-                    << "ACCOUNT -- XRP --> offer";
+                    << "ACCOUNT -- XDV --> offer";
 
-                // Deliver XRP to limbo.
+                // Deliver XDV to limbo.
                 resultCode = ledger().accountSend (
-                    node().account_, xrpAccount(), node().saFwdDeliver);
+                    node().account_, xdvAccount(), node().saFwdDeliver);
             }
         }
     }

@@ -72,7 +72,7 @@ extern void setCallingThreadName (const char* n)
         cLine >> pName;
 
         if (pName.empty ())
-            pName = "rippled";
+            pName = "divvyd";
         else
         {
             size_t zero = pName.find_first_of ('\0');

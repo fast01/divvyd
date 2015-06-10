@@ -29,7 +29,7 @@ namespace ripple {
 /** Manages the current fee schedule.
 
     The "base" fee is the cost to send a reference transaction under no load,
-    expressed in millionths of one XRP.
+    expressed in millionths of one XDV.
 
     The "load" fee is how much the local server currently charges to send a
     reference transaction. This fee fluctuates based on the load of the

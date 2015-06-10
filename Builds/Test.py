@@ -43,10 +43,10 @@ import sys
 IS_WINDOWS = platform.system().lower() == 'windows'
 
 if IS_WINDOWS:
-    BINARY_RE = re.compile(r'build\\([^\\]+)\\rippled.exe')
+    BINARY_RE = re.compile(r'build\\([^\\]+)\\divvyd.exe')
 
 else:
-    BINARY_RE = re.compile(r'build/([^/]+)/rippled')
+    BINARY_RE = re.compile(r'build/([^/]+)/divvyd')
 
 ALL_TARGETS = ['debug', 'release']
 
@@ -164,7 +164,7 @@ if __name__ == '__main__':
             ARGS.verbose and print(*lines, sep='')
 
             print('npm tests for', target)
-            resultcode, lines = shell('npm', 'test', '--rippled=' + executable)
+            resultcode, lines = shell('npm', 'test', '--divvyd=' + executable)
             if resultcode:
                 print('ERROR:\n', *lines, sep='')
                 failed.append([target, 'npm'])

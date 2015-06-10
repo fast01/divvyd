@@ -524,7 +524,7 @@ public:
         backend->close();
     }
 
-    // Simulate a rippled workload:
+    // Simulate a divvyd workload:
     // Each thread randomly:
     //      inserts a new key
     //      fetches an old key

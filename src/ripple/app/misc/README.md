@@ -1,7 +1,7 @@
 # Fee Voting
 
 The Ripple payment protocol enforces a fee schedule expressed in units of the
-native currency, XRP. Fees for transactions are paid directly from the account
+native currency, XDV. Fees for transactions are paid directly from the account
 owner. There are also reserve requirements for each item that occupies storage
 in the ledger. The reserve fee schedule contains both a per-account reserve,
 and a per-owned-item reserve. The items an account may own include active
@@ -10,7 +10,7 @@ offers, trust lines, and tickets.
 Validators may vote to increase fees if they feel that the network is charging
 too little. They may also vote to decrease fees if the fees are too costly
 relative to the value the network provides. One common case where a validator
-may want to change fees is when the value of the native currency XRP fluctuates
+may want to change fees is when the value of the native currency XDV fluctuates
 relative to other currencies.
 
 The fee voting mechanism takes place every 256 ledgers ("voting ledgers"). In
@@ -54,7 +54,7 @@ be converged in the consensus process, the following algorithm is used:
 
 ## Configuration
 
-A validating instance of rippled uses information in the configuration file
+A validating instance of divvyd uses information in the configuration file
 to determine how it wants to vote on the fee schedule. It is the responsibility
 of the administrator to set these values.
 
@@ -64,7 +64,7 @@ of the administrator to set these values.
 
 An Amendment is a new or proposed change to a ledger rule. Ledger rules affect 
 transaction processing and consensus; peers must use the same set of rules for 
-consensus to succeed, otherwise different instances of rippled will get 
+consensus to succeed, otherwise different instances of divvyd will get 
 different results. Amendments can be almost anything but they must be accepted 
 by a network majority through a consensus process before they are utilized. An 
 Amendment must receive at least an 80% approval rate from validating nodes for 
@@ -77,7 +77,7 @@ process of an Amendment from its conception to approval and usage.
 
 *  Some members contribute their time and work to develop the Amendment.
 
-*  A pull request is created and the new code is folded into a rippled build 
+*  A pull request is created and the new code is folded into a divvyd build 
   and made available for use.
 
 *  The consensus process begins with the validating nodes.

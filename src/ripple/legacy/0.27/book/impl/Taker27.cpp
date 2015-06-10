@@ -268,7 +268,7 @@ Taker::cross (Offer const& leg1, Offer const& leg2)
     assert (amount1.out == amount2.in);
 
     // As written, flow can't handle a 3-party transfer, but this works for
-    // us because the output of leg1 and the input leg2 are XRP.
+    // us because the output of leg1 and the input leg2 are XDV.
     Amounts flow1 (flow (amount1, leg1, m_account));
 
     amount2 = leg2.quality().ceil_in (amount2, flow1.out);

@@ -35,7 +35,7 @@ protected:
 public:
     enum ValidatorSource
     {
-        vsConfig    = 'C',  // rippled.cfg
+        vsConfig    = 'C',  // divvyd.cfg
         vsInbound   = 'I',
         vsManual    = 'M',
         vsReferral  = 'R',

@@ -139,7 +139,7 @@ STTx::getMentionedAccounts () const
         {
             auto const& issuer = sa->getIssuer ();
 
-            if (isXRP (issuer))
+            if (isXDV (issuer))
                 continue;
 
             RippleAddress na;

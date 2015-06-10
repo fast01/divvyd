@@ -54,7 +54,7 @@ _parser.add_argument(
 
 _parser.add_argument(
     '--config',
-    help='The rippled configuration file name.',
+    help='The divvyd configuration file name.',
     )
 
 _parser.add_argument(
@@ -96,13 +96,13 @@ _parser.add_argument(
     )
 
 _parser.add_argument(
-    '--rippled', '-r',
-    help='The filename of a rippled binary for retrieving ledgers.',
+    '--divvyd', '-r',
+    help='The filename of a divvyd binary for retrieving ledgers.',
     )
 
 _parser.add_argument(
     '--server', '-s',
-    help='IP address of a rippled JSON server.',
+    help='IP address of a divvyd JSON server.',
     )
 
 _parser.add_argument(
@@ -177,11 +177,11 @@ if ARGS.window < 0:
 
 PrettyPrint.INDENT = (ARGS.indent * ' ')
 
-_loaders = (ARGS.database != NONE) + bool(ARGS.rippled) + bool(ARGS.server)
+_loaders = (ARGS.database != NONE) + bool(ARGS.divvyd) + bool(ARGS.server)
 
 if not _loaders:
-    ARGS.rippled = 'rippled'
+    ARGS.divvyd = 'divvyd'
 
 elif _loaders > 1:
-    raise ValueError('At most one of --database,  --rippled and --server '
+    raise ValueError('At most one of --database,  --divvyd and --server '
                      'may be specified')

@@ -50,7 +50,7 @@ private:
     Issue mIssue;
     mantissa_type mValue;
     exponent_type mOffset;
-    bool mIsNative;      // A shorthand for isXRP(mIssue).
+    bool mIsNative;      // A shorthand for isXDV(mIssue).
     bool mIsNegative;
 
 public:
@@ -163,11 +163,11 @@ public:
         return STAmount (mIssue);
     }
 
-    // When the currency is XRP, the value in raw unsigned units.
+    // When the currency is XDV, the value in raw unsigned units.
     std::uint64_t
     getNValue() const;
 
-    // When the currency is XRP, the value in raw signed units.
+    // When the currency is XDV, the value in raw signed units.
     std::int64_t
     getSNValue() const;
 
@@ -456,9 +456,9 @@ getRate (STAmount const& offerOut, STAmount const& offerIn);
 
 //------------------------------------------------------------------------------
 
-inline bool isXRP(STAmount const& amount)
+inline bool isXDV(STAmount const& amount)
 {
-    return isXRP (amount.issue().currency);
+    return isXDV (amount.issue().currency);
 }
 
 // VFALCO TODO Make static member accessors for these in STAmount

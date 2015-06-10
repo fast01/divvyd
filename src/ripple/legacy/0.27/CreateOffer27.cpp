@@ -37,7 +37,7 @@ TER
 CreateOffer::checkAcceptAsset(IssueRef issue) const
 {
     /* Only valid for custom currencies */
-    assert (!isXRP (issue.currency));
+    assert (!isXDV (issue.currency));
 
     SLE::pointer const issuerAccount = mEngine->entryCache (
         ltACCOUNT_ROOT, getAccountRootIndex (issue.account));
@@ -263,7 +263,7 @@ CreateOffer::doApply()
     else if (saTakerPays.isNative () && saTakerGets.isNative ())
     {
         m_journal.warning <<
-            "Malformed offer: XRP for XRP";
+            "Malformed offer: XDV for XDV";
 
         terResult = temBAD_OFFER;
     }
@@ -281,7 +281,7 @@ CreateOffer::doApply()
 
         terResult = temREDUNDANT;
     }
-    // We don't allow a non-native currency to use the currency code XRP.
+    // We don't allow a non-native currency to use the currency code XDV.
     else if (badCurrency() == uPaysCurrency || badCurrency() == uGetsCurrency)
     {
         m_journal.warning <<

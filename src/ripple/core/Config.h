@@ -93,7 +93,7 @@ public:
         // This replaces CONFIG_FILE_NAME
         static char const* getConfigFileName ()
         {
-            return "rippled.cfg";
+            return "divvyd.cfg";
         }
 
         static char const* getDatabaseDirName ()
@@ -140,9 +140,9 @@ public:
     beast::URL getValidatorsURL () const;
 
     // DEPRECATED
-    boost::filesystem::path     VALIDATORS_FILE;        // As specifed in rippled.cfg.
+    boost::filesystem::path     VALIDATORS_FILE;        // As specifed in divvyd.cfg.
 
-    /** List of Validators entries from rippled.cfg */
+    /** List of Validators entries from divvyd.cfg */
     std::vector <std::string> validators;
 
 public:
@@ -171,9 +171,9 @@ public:
     std::string                 VALIDATORS_SITE;        // Where to find validators.txt on the Internet.
     std::string                 VALIDATORS_URI;         // URI of validators.txt.
     std::string                 VALIDATORS_BASE;        // Name
-    std::vector<std::string>    IPS;                    // Peer IPs from rippled.cfg.
-    std::vector<std::string>    IPS_FIXED;              // Fixed Peer IPs from rippled.cfg.
-    std::vector<std::string>    SNTP_SERVERS;           // SNTP servers from rippled.cfg.
+    std::vector<std::string>    IPS;                    // Peer IPs from divvyd.cfg.
+    std::vector<std::string>    IPS_FIXED;              // Fixed Peer IPs from divvyd.cfg.
+    std::vector<std::string>    SNTP_SERVERS;           // SNTP servers from divvyd.cfg.
 
     enum StartUpType
     {

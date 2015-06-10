@@ -32,7 +32,7 @@ static inline
 std::string const&
 systemName ()
 {
-    static std::string const name = "ripple";
+    static std::string const name = "divvy";
     return name;
 }
 
@@ -59,7 +59,7 @@ static inline
 std::string const&
 systemCurrencyCode ()
 {
-    static std::string const code = "XRP";
+    static std::string const code = "XDV";
     return code;
 }
 

@@ -49,11 +49,11 @@ typedef base_uint<160, detail::NodeIDTag> NodeID;
 typedef hash_set<Currency> CurrencySet;
 typedef hash_set<NodeID> NodeIDSet;
 
-/** A special account that's used as the "issuer" for XRP. */
-Account const& xrpAccount();
+/** A special account that's used as the "issuer" for XDV. */
+Account const& xdvAccount();
 
-/** XRP currency. */
-Currency const& xrpCurrency();
+/** XDV currency. */
+Currency const& xdvCurrency();
 
 /** A placeholder for empty accounts. */
 Account const& noAccount();
@@ -61,18 +61,18 @@ Account const& noAccount();
 /** A placeholder for empty currencies. */
 Currency const& noCurrency();
 
-/** We deliberately disallow the currency that looks like "XRP" because too
-    many people were using it instead of the correct XRP currency. */
+/** We deliberately disallow the currency that looks like "XDV" because too
+    many people were using it instead of the correct XDV currency. */
 
 
 Currency const& badCurrency();
 
-inline bool isXRP(Currency const& c)
+inline bool isXDV(Currency const& c)
 {
     return c == zero;
 }
 
-inline bool isXRP(Account const& c)
+inline bool isXDV(Account const& c)
 {
     return c == zero;
 }
@@ -80,7 +80,7 @@ inline bool isXRP(Account const& c)
 /** Returns a human-readable form of the account. */
 std::string to_string(Account const&);
 
-/** Returns "", "XRP", or three letter ISO code. */
+/** Returns "", "XDV", or three letter ISO code. */
 std::string to_string(Currency const& c);
 
 /** Tries to convert a string to a Currency, returns true on success. */

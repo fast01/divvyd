@@ -122,7 +122,7 @@ std::string const& getFullVersionString ()
     {
         PrettyPrinter ()
         {
-            fullVersionString = "rippled-" + getVersionString ();
+            fullVersionString = "divvyd-" + getVersionString ();
         }
 
         std::string fullVersionString;

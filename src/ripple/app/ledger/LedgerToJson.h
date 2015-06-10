@@ -45,7 +45,7 @@ struct LedgerFill
     }
 
     enum Options {
-        dumpTxrp = 1, dumpState = 2, expand = 4, full = 8, binary = 16};
+        dumpTxdv = 1, dumpState = 2, expand = 4, full = 8, binary = 16};
 
     Ledger const& ledger;
     int options;
@@ -121,7 +121,7 @@ void fillJson (Object& json, LedgerFill const& fill)
     }
 
     auto &transactionMap = ledger.peekTransactionMap();
-    if (transactionMap && (bFull || fill.options & LedgerFill::dumpTxrp))
+    if (transactionMap && (bFull || fill.options & LedgerFill::dumpTxdv))
     {
         auto&& txns = setArray (json, jss::transactions);
         SHAMapTreeNode::TNType type;

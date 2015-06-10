@@ -1,14 +1,14 @@
-Name:           rippled
+Name:           divvyd
 Version:        0.28.0
 Release:        1%{?dist}
 Summary:        Ripple peer-to-peer network daemon
 
 Group:          Applications/Internet
 License:        ISC
-URL:            https://github.com/ripple/rippled
+URL:            https://github.com/ripple/divvyd
 
-# curl -L -o SOURCES/rippled-release.zip https://github.com/ripple/rippled/archive/release.zip
-Source0:        rippled-release.zip
+# curl -L -o SOURCES/divvyd-release.zip https://github.com/ripple/divvyd/archive/release.zip
+Source0:        divvyd-release.zip
 BuildRoot:      %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
 BuildRequires:  gcc-c++ scons openssl-devel protobuf-devel
@@ -20,13 +20,13 @@ Rippled is the server component of the Ripple network.
 
 
 %prep
-%setup -n rippled-release
+%setup -n divvyd-release
 
 
 %build
 # Assume boost is manually installed
 export RIPPLED_BOOST_HOME=/usr/local/boost_1_55_0
-scons -j `grep -c processor /proc/cpuinfo` build/rippled
+scons -j `grep -c processor /proc/cpuinfo` build/divvyd
 
 
 %install
@@ -34,9 +34,9 @@ rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/%{name}
 cp LICENSE %{buildroot}/usr/share/%{name}/
 mkdir -p %{buildroot}/usr/bin
-cp build/rippled %{buildroot}/usr/bin/rippled
+cp build/divvyd %{buildroot}/usr/bin/divvyd
 mkdir -p %{buildroot}/etc/%{name}
-cp doc/rippled-example.cfg %{buildroot}/etc/%{name}/rippled.cfg
+cp doc/divvyd-example.cfg %{buildroot}/etc/%{name}/divvyd.cfg
 mkdir -p %{buildroot}/var/lib/%{name}/db
 mkdir -p %{buildroot}/var/log/%{name}
 
@@ -47,6 +47,6 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
-/usr/bin/rippled
-/usr/share/rippled/LICENSE
-/etc/rippled/rippled-example.cfg
+/usr/bin/divvyd
+/usr/share/divvyd/LICENSE
+/etc/divvyd/divvyd-example.cfg

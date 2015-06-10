@@ -2,7 +2,7 @@
 
 Some of these directories come from entire outside repositories brought in
 using git-subtree. This means that the source files are inserted directly
-into the rippled repository. They can be edited and committed just as if they
+into the divvyd repository. They can be edited and committed just as if they
 were normal files.
 
 However, if you create a commit that contains files both from a
@@ -13,7 +13,7 @@ repository when the changes are pushed back to the upstream.
 When submitting pull request, make sure that any commits which include
 files from subtrees are isolated - i.e. do not mix files from subtrees
 and ripple in the same commit. This way, the commit message will make
-sense. We don't want to see "Fix pathfinding bug with XRP" appearing
+sense. We don't want to see "Fix pathfinding bug with XDV" appearing
 in the LevelDB or Beast commit log, for example.
 
 About git-subtree:
