@@ -74,7 +74,7 @@ resources.
 
 #divvyd - Divvy P2P server
 
-##[![Build Status](https://travis-ci.org/divvy/divvyd.png?branch=develop)](https://travis-ci.org/divvy/divvyd)
+##[![Build Status](https://travis-ci.org/ripple/rippled.png?branch=develop)](https://travis-ci.org/ripple/rippled)
 
 This is the repository for Divvy's `divvyd`, reference P2P server.
 
